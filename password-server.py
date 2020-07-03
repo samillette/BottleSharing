@@ -23,7 +23,7 @@
 #  
 """
 	Samuel Millette
-	2.2.2020
+	7.2.2020
 	With the help of RealPython's Socket Programming tutorial
 	
 	Socket program mfor my kombucha bottle sharing server hosted on a raspberry pi 4
@@ -33,23 +33,26 @@ import socket
 
 
 def main(args):
-	HOST = '10.0.0.61'    # Host IP address (pi bishop IP)
-	PORT = 6666        # Port ID number used by the server
-    while True
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:	
-            s.bind((HOST, PORT))
-            s.listen()
-            conn, addr = s.accept()
-            print(f"Connection from {addr} has been established, verifying client ID")
-            with conn:
-                while True:
-                    data = conn.recv(1024)
-                    if not data = b'Kombucha!':
-                        s.close()
-                        break
-                    else:
-                        if not data: break
+    HOST = '10.0.0.61'    # Host IP address (pi bishop IP)
+    PORT = 6666        # Port ID number used by the server
+    while True:
+	with socket.socket(socket.AF_Inet, socket.SOCK_STREAM) as s:
+	    s.bind((HOST, PORT))
+	    s.listen()
+	    conn, addr = s.accept()
+	    print(f"Connection from {addr} has been established, verifying client ID")
+	    
+	    with conn:
+		while True:
+		    data = conn.recv(1024)
+		    if not data == b'Kombucha!':
+			s.close()
+			break
+		    else:
+			if not data: break
                         conn.sendall(data)
+			s.close()
+			
 
 if __name__ == '__main__':
     import sys
