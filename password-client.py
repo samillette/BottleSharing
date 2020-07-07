@@ -35,11 +35,11 @@ import socket
 
 def main(args):
     HOST = '10.0.0.61'    # Host IP address (pi bishop IP)
-    PORT = 6666        # Port ID number used by the server
+    PORT = 4321        # Port ID number used by the server
     
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
-        s.sendall(b'Kombucha!')
+        s.send(b'Kombucha!')
         data = s.recv(1024)
 
     print('Received', repr(data))
