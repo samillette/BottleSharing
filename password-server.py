@@ -43,7 +43,7 @@ def main(args):
         s.bind((HOST, PORT))
         
         #sets socket to listen
-        s.listen(0)
+        s.listen(1)
         
         #on connection, creates a new socket object 'conn' and address of client socket
         conn, addr = s.accept()
@@ -68,32 +68,26 @@ def main(args):
             else:
                 
                 #sends affirmative to client
-                conn.send(b'Y')
+                conn.sendall(b'Y')
                 print("connection accepted")
                 
                 #starts the send / receive loop
+                    
+                #receives bottle ID
+                bottleID = conn.recv(2)
                 
-                    #receives data on bottle ID
-                    bottleID = conn.recv(2)
+                #TODO add in mySQl data grabber
                     
-                    #TODO add in mySQl data grabber
-                    #three paths: bottle found and checked in (I), found and checked out (O), not found (F)
+                #gets user input on the state of the bottle (temporary)
+                bottleState = input("Enter input for state of bottle: I (checked in), O (checked out), F (not found)")
+                                    
+                #sends state of bottle
+                conn.sendall(bottleState.encode('UTF-8'))
                     
-                    #sends state of bottle
-                    conn.sendall(b'I')
-                    
-                    #TODO, code dummy paths with user input to simulate different states, figure out
-                    # how to automate this program to run after closure
-                    
-                    #checks if there is any data received at all
-                    if not data:
-                        print("Connection from {addr} no longer receiving data")
-                        break
-                    else:
+                #TODO, code dummy paths with user input to simulate different states, figure out
+                # how to automate this program to run after closure
                         
-            print("closing socket")
-            conn.sendall(data)
-            conn.close()
+            print("closing conn socket")
     s.close()
 
 
