@@ -32,17 +32,34 @@
 
 import socket
 
-
 def main(args):
     HOST = '10.0.0.61'    # Host IP address (pi bishop IP)
     PORT = 4321        # Port ID number used by the server
-    
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((HOST, PORT))
-        s.send(b'Kombucha!')
-        data = s.recv(1024)
 
-    print('Received', repr(data))
+    # initializes socket object as s
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+
+        # connects to the server socket
+        s.connect((HOST, PORT))
+        print("connection to" + HOST + " over confirmed")
+
+        # sends introductory 'password'
+        s.send(b'Kombucha!')
+
+        # receives yes confirmation (if it was a no the socket would close anyways
+        if s.recv(1) == b'Y':
+            print("connection confirmed")
+
+            #TODO: QR code in order to read and load bottle ID number
+
+            # sends bottle number (placeholder for now)
+            s.sendall(b"99")
+
+            # receive state of the bottle leading to different layout on the app
+            bottle_state = s.recv(1)
+
+            #TODO: find interface between python and Android to make layout change conditional to bottle state
+        print(bottle_state.decode('UTF-8'))
 
 if __name__ == '__main__':
     import sys
