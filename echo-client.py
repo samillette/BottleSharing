@@ -34,15 +34,15 @@ import socket
 
 
 def main(args):
-    HOST = '127.0.0.1'    # Host IP address (in this case its the loopback for now)
+    HOST = '10.0.0.58'    # Host IP address (in this case its the loopback for now)
     PORT = 6666        # Port ID number used by the server
     
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
-        s.sendall(b'Hello, bruh')
+        s.sendall(b'Hello world')
         data = s.recv(1024)
 
-    print('Received', repr(data))
+    print('Received :', repr(data))
 
 if __name__ == '__main__':
     import sys

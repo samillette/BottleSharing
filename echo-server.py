@@ -27,14 +27,13 @@
 	6.12.2020
 	With the help of RealPython's Socket Programming tutorial
 	
-	Socket program mfor my kombucha bottle sharing server hosted on a raspberry pi 4
+	Socket program for my kombucha bottle sharing server hosted on a raspberry pi 4
 """
 
 import socket
 
-
 def main(args):
-	HOST = '127.0.0.1'    # Host IP address (in this case its the loopback for now)
+	HOST = '10.0.0.58'    # Host IP address (in this case its the loopback for now)
 	PORT = 6666        # Port ID number used by the server
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:	
 		s.bind((HOST, PORT))
@@ -45,6 +44,7 @@ def main(args):
 			while True:
 				data = conn.recv(1024)
 				if not data: break
+				print( repr(data) )
 				conn.sendall(data)
 
 if __name__ == '__main__':
